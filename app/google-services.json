@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "278932150301",
+    "project_id": "organic-farming-d0c67",
+    "storage_bucket": "organic-farming-d0c67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278932150301:android:7d5e60fc2891f8a7230ef4",
+        "android_client_info": {
+          "package_name": "com.example.organic_farming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278932150301-j2rtr0234849q4nic64a4r9g3ibr7iqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD25ui4V7_YnaxY1JqRigbiAg3ohkeT9IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278932150301-j2rtr0234849q4nic64a4r9g3ibr7iqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278932150301:android:87266d7350353bf8230ef4",
+        "android_client_info": {
+          "package_name": "com.example.sellerdashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278932150301-j2rtr0234849q4nic64a4r9g3ibr7iqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD25ui4V7_YnaxY1JqRigbiAg3ohkeT9IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278932150301-j2rtr0234849q4nic64a4r9g3ibr7iqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
