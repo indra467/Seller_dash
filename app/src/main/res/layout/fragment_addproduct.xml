@@ -87,14 +87,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/product_img_btn"
                 android:text="Select Product Image"/>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/product_img_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                tools:listitem="@layout/image_item"
                 android:orientation="horizontal"
-                android:id="@+id/product_img_recycler_view"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/image_item" />
+
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

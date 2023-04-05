@@ -105,7 +105,7 @@ private lateinit var binding : FragmentCategoryBinding
         val db = Firebase.firestore
 
         val data = hashMapOf<String, Any>(
-            "cate" to categoryName,
+            "cat" to categoryName,
             "img" to url
         )
         db.collection("categories").add(data)

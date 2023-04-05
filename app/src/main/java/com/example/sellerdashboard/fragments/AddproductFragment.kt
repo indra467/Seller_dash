@@ -10,15 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.VISIBLE
 import com.example.sellerdashboard.R
 import com.example.sellerdashboard.adapter.AddProductImageAdapter
 import com.example.sellerdashboard.databinding.FragmentAddproductBinding
+import com.example.sellerdashboard.model.AddProductModel
 import com.example.sellerdashboard.model.CategoryModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddproductFragment : Fragment() {
@@ -91,8 +96,82 @@ class AddproductFragment : Fragment() {
         if(binding.productNameEdt.text.toString().isEmpty()){
             binding.productNameEdt.requestFocus()
             binding.productNameEdt.error = "Empty"
+        }else if(binding.productDescriptionEdt.text.toString().isEmpty()){
+            binding.productDescriptionEdt.requestFocus()
+            binding.productDescriptionEdt.error = "Empty"
+        }else if(coverImage == null){
+            Toast.makeText(requireContext(), "Please select cover image", Toast.LENGTH_SHORT).show()
+        }else if(list.size < 1){
+            Toast.makeText(requireContext(), "Please select product images", Toast.LENGTH_SHORT).show()
+        }else{
+            uploadImage()
         }
     }
+
+    private fun uploadImage() {
+        dialog.show()
+        val fileName = UUID.randomUUID().toString()+".jpg"
+        val refStorage = FirebaseStorage.getInstance().reference.child("products/$fileName")
+        refStorage.putFile(coverImage!!).addOnSuccessListener {
+            it.storage.downloadUrl.addOnSuccessListener { image ->
+                coverImgUrl=image.toString()
+                uploadProductImage()
+
+            }
+        }.addOnFailureListener{
+            dialog.dismiss()
+            Toast.makeText(requireContext(), "Something went Wrong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private var i=0
+    private fun uploadProductImage() {
+        dialog.show()
+        val fileName = UUID.randomUUID().toString()+".jpg"
+        val refStorage = FirebaseStorage.getInstance().reference.child("products/$fileName")
+        refStorage.putFile(list[i]).addOnSuccessListener {
+            it.storage.downloadUrl.addOnSuccessListener { image ->
+                listImages.add(image!!.toString())
+                if(list.size == listImages.size){
+                    storeData()
+                }else{
+                   i+=1
+                   uploadProductImage()
+                }
+
+            }
+        }.addOnFailureListener{
+            dialog.dismiss()
+            Toast.makeText(requireContext(), "Something went Wrong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun storeData() {
+        val db = Firebase.firestore.collection("products")
+        val key = db.document().id
+
+        val data = AddProductModel(
+            binding.productNameEdt.text.toString(),
+            binding.productDescriptionEdt.text.toString(),
+            coverImgUrl.toString(),
+            categoryList[binding.productCategoryDropdown.selectedItemPosition],
+            key,
+            binding.productMrpEdt.text.toString(),
+            listImages
+
+        )
+        db.document(key).set(data).addOnSuccessListener {
+            dialog.dismiss()
+            Toast.makeText(requireContext(), "Product Added", Toast.LENGTH_SHORT).show()
+            binding.productNameEdt.text = null
+        }
+            .addOnFailureListener{
+                dialog.dismiss()
+                Toast.makeText(requireContext(), "Something went Wrong", Toast.LENGTH_SHORT).show()
+            }
+    }
+
 
     private fun setProductCategory() {
         categoryList = ArrayList()
